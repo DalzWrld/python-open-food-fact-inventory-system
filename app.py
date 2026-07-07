@@ -57,7 +57,6 @@ def delete_item(item_id):
 
 @app.route("/lookup/barcode/<barcode>", methods=["GET"])
 def lookup_by_barcode(barcode):
-    """Preview product data from OpenFoodFacts without saving it."""
     product = external_api.fetch_by_barcode(barcode)
     if product is None:
         return jsonify({"error": f"No product found for barcode {barcode}"}), 404
@@ -66,7 +65,6 @@ def lookup_by_barcode(barcode):
 
 @app.route("/lookup/name/<name>", methods=["GET"])
 def lookup_by_name(name):
-    """Preview product data from OpenFoodFacts without saving it."""
     product = external_api.fetch_by_name(name)
     if product is None:
         return jsonify({"error": f"No product found for name '{name}'"}), 404
@@ -75,7 +73,6 @@ def lookup_by_name(name):
 
 @app.route("/import/barcode/<barcode>", methods=["POST"])
 def import_by_barcode(barcode):
-    """Fetch a product from OpenFoodFacts and add it straight to inventory."""
     product = external_api.fetch_by_barcode(barcode)
     if product is None:
         return jsonify({"error": f"No product found for barcode {barcode}"}), 404
@@ -86,7 +83,6 @@ def import_by_barcode(barcode):
 
 @app.route("/import/name/<name>", methods=["POST"])
 def import_by_name(name):
-    """Fetch a product from OpenFoodFacts and add it straight to inventory."""
     product = external_api.fetch_by_name(name)
     if product is None:
         return jsonify({"error": f"No product found for name '{name}'"}), 404
