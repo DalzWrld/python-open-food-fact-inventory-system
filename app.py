@@ -1,7 +1,9 @@
 from flask import Flask, jsonify
+from routes.inventory import inventory_bp
 
 def create_app():
     app = Flask(__name__)
+    app.register_blueprint(inventory_bp)
 
     @app.route("/")
     def index():

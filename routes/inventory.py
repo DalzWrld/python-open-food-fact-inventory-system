@@ -1,14 +1,16 @@
-from flask import app, request, jsonify
+from flask import Blueprint, request, jsonify
 
 from data import store
 from services import external_api
 
-@app.route("/inventory", methods=["GET"])
+inventory_bp = Blueprint("inventory", __name__, url_prefix="/inventory")
+
+@inventory_bp.route("", methods=["GET"])
 def get_all_items():
     return jsonify(store.get_all_items()), 200
 
 
-@app.route("/inventory/<int:item_id>", methods=["GET"])
+@inventory_bp.route("/<int:item_id>", methods=["GET"])
 def get_item(item_id):
     item = store.get_item_by_id(item_id)
     if item is None:
@@ -16,7 +18,7 @@ def get_item(item_id):
     return jsonify(item), 200
 
 
-@app.route("/inventory", methods=["POST"])
+@inventory_bp.route("", methods=["POST"])
 def create_item():
     data = request.get_json(silent=True)
     if not data or "name" not in data:
@@ -26,7 +28,7 @@ def create_item():
     return jsonify(new_item), 201
 
 
-@app.route("/inventory/<int:item_id>", methods=["PATCH"])
+@inventory_bp.route("/<int:item_id>", methods=["PATCH"])
 def update_item(item_id):
     data = request.get_json(silent=True)
     if not data:
@@ -39,7 +41,7 @@ def update_item(item_id):
     return jsonify(updated_item), 200
 
 
-@app.route("/inventory/<int:item_id>", methods=["DELETE"])
+@inventory_bp.route("/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
     deleted = store.delete_item(item_id)
     if not deleted:
@@ -50,7 +52,7 @@ def delete_item(item_id):
 
 
 
-@app.route("/lookup/barcode/<barcode>", methods=["GET"])
+@inventory_bp.route("/lookup/barcode/<barcode>", methods=["GET"])
 def lookup_by_barcode(barcode):
     product = external_api.fetch_by_barcode(barcode)
     if product is None:
@@ -58,7 +60,7 @@ def lookup_by_barcode(barcode):
     return jsonify(product), 200
 
 
-@app.route("/lookup/name/<name>", methods=["GET"])
+@inventory_bp.route("/lookup/name/<name>", methods=["GET"])
 def lookup_by_name(name):
     product = external_api.fetch_by_name(name)
     if product is None:
@@ -66,7 +68,7 @@ def lookup_by_name(name):
     return jsonify(product), 200
 
 
-@app.route("/import/barcode/<barcode>", methods=["POST"])
+@inventory_bp.route("/import/barcode/<barcode>", methods=["POST"])
 def import_by_barcode(barcode):
     product = external_api.fetch_by_barcode(barcode)
     if product is None:
@@ -76,7 +78,7 @@ def import_by_barcode(barcode):
     return jsonify(new_item), 201
 
 
-@app.route("/import/name/<name>", methods=["POST"])
+@inventory_bp.route("/import/name/<name>", methods=["POST"])
 def import_by_name(name):
     product = external_api.fetch_by_name(name)
     if product is None:
