@@ -17,10 +17,6 @@ def _normalize_product(product):
 
 
 def fetch_by_barcode(barcode):
-    """
-    Look up a single product by its barcode.
-    Returns a normalized product dict, or None if not found / on error.
-    """
     try:
         response = requests.get(
             BARCODE_URL.format(barcode=barcode), timeout=REQUEST_TIMEOUT
