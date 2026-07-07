@@ -5,12 +5,10 @@ _next_id = 1
 
 
 def get_all_items():
-    """Return every item currently in the inventory."""
     return inventory
 
 
 def get_item_by_id(item_id):
-    """Return a single item matching item_id, or None if not found."""
     for item in inventory:
         if item["id"] == item_id:
             return item
@@ -18,13 +16,6 @@ def get_item_by_id(item_id):
 
 
 def add_item(data):
-    """
-    Add a new item to the inventory.
-
-    'data' should be a dict containing at least 'name'. Missing optional
-    fields are filled in with sensible defaults so the shape of every
-    item in the array stays consistent.
-    """
     global _next_id
 
     new_item = {
@@ -44,11 +35,6 @@ def add_item(data):
 
 
 def update_item(item_id, data):
-    """
-    Update fields on an existing item. Only keys present in 'data'
-    are changed; everything else stays the same. Returns the updated
-    item, or None if no item with that id exists.
-    """
     item = get_item_by_id(item_id)
     if item is None:
         return None
