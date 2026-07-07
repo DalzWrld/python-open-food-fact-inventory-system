@@ -4,10 +4,14 @@ import sys
 import requests
 
 BASE_URL = "http://127.0.0.1:5000"
-TIMEOUT = 10 # seconds
+TIMEOUT = 10
 
 
 def _request(method, path, **kwargs):
+    """
+    Wrapper around requests that centralizes error handling so every
+    command doesn't have to repeat the same try/except block.
+    """
     url = f"{BASE_URL}{path}"
     try:
         response = requests.request(method, url, timeout=TIMEOUT, **kwargs)
