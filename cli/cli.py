@@ -134,7 +134,7 @@ class InventoryCLI:
             data = response.json()
             
             if data['status'] == 'success':
-                print("✅ Item added successfully!")
+                print("Item added successfully!")
                 print(f"ID: {data['data']['id']}")
             else:
                 print(f"Error: {data.get('message', 'Unknown error')}")
@@ -205,7 +205,7 @@ class InventoryCLI:
                 data = response.json()
                 
                 if data['status'] == 'success':
-                    print("✅ Item updated successfully!")
+                    print("Item updated successfully!")
                 else:
                     print(f"Error: {data.get('message', 'Unknown error')}")
             else:
@@ -231,7 +231,7 @@ class InventoryCLI:
             data = response.json()
             
             if data['status'] == 'success':
-                print("✅ Item deleted successfully!")
+                print("Item deleted successfully!")
             else:
                 print(f"Error: {data.get('message', 'Unknown error')}")
         except requests.RequestException as e:
@@ -331,7 +331,7 @@ class InventoryCLI:
                 data = response.json()
                 
                 if data['status'] == 'success':
-                    print("✅ Product fetched and added to inventory!")
+                    print("Product fetched and added to inventory!")
                     print(f"ID: {data['data']['id']}")
                 else:
                     print(f"Error adding to inventory: {data.get('message', 'Unknown error')}")
