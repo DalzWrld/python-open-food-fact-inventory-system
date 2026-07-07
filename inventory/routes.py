@@ -1,17 +1,15 @@
-from flask import Blueprint, jsonify, request
+from flask import app, jsonify, request
 
 from data import store
 from services import external_api
 
-inventory_bp = Blueprint("inventory", __name__, url_prefix="/inventory")
 
-
-@inventory_bp.route("", methods=["GET"])
+@app.route("/inventory", methods=["GET"])
 def get_all_items():
     return jsonify(store.get_all_items()), 200
 
 
-@inventory_bp.route("/<int:item_id>", methods=["GET"])
+@app.route("/inventory/<int:item_id>", methods=["GET"])
 def get_item(item_id):
     item = store.get_item_by_id(item_id)
     if item is None:
@@ -19,7 +17,7 @@ def get_item(item_id):
     return jsonify(item), 200
 
 
-@inventory_bp.route("", methods=["POST"])
+@app.route("/inventory", methods=["POST"])
 def create_item():
     data = request.get_json(silent=True)
     if not data or "name" not in data:
@@ -29,7 +27,7 @@ def create_item():
     return jsonify(new_item), 201
 
 
-@inventory_bp.route("/<int:item_id>", methods=["PATCH"])
+@app.route("/inventory/<int:item_id>", methods=["PATCH"])
 def update_item(item_id):
     data = request.get_json(silent=True)
     if not data:
@@ -42,7 +40,7 @@ def update_item(item_id):
     return jsonify(updated_item), 200
 
 
-@inventory_bp.route("/<int:item_id>", methods=["DELETE"])
+@app.route("/inventory/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
     deleted = store.delete_item(item_id)
     if not deleted:
@@ -55,7 +53,7 @@ def delete_item(item_id):
 # External API helper routes
 # ---------------------------------------------------------------------------
 
-@inventory_bp.route("/lookup/barcode/<barcode>", methods=["GET"])
+@app.route("/lookup/barcode/<barcode>", methods=["GET"])
 def lookup_by_barcode(barcode):
     """Preview product data from OpenFoodFacts without saving it."""
     product = external_api.fetch_by_barcode(barcode)
@@ -64,7 +62,7 @@ def lookup_by_barcode(barcode):
     return jsonify(product), 200
 
 
-@inventory_bp.route("/lookup/name/<name>", methods=["GET"])
+@app.route("/lookup/name/<name>", methods=["GET"])
 def lookup_by_name(name):
     """Preview product data from OpenFoodFacts without saving it."""
     product = external_api.fetch_by_name(name)
@@ -73,7 +71,7 @@ def lookup_by_name(name):
     return jsonify(product), 200
 
 
-@inventory_bp.route("/import/barcode/<barcode>", methods=["POST"])
+@app.route("/import/barcode/<barcode>", methods=["POST"])
 def import_by_barcode(barcode):
     """Fetch a product from OpenFoodFacts and add it straight to inventory."""
     product = external_api.fetch_by_barcode(barcode)
@@ -84,7 +82,7 @@ def import_by_barcode(barcode):
     return jsonify(new_item), 201
 
 
-@inventory_bp.route("/import/name/<name>", methods=["POST"])
+@app.route("/import/name/<name>", methods=["POST"])
 def import_by_name(name):
     """Fetch a product from OpenFoodFacts and add it straight to inventory."""
     product = external_api.fetch_by_name(name)
