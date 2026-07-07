@@ -1,15 +1,13 @@
 import requests
-import json
+# import json
 import sys
 import os
-from typing import Dict, Any
+# from typing import Dict, Any
 
 # Add the parent directory to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 class InventoryCLI:
-    """CLI interface for the Inventory Management System"""
-    
     def __init__(self, base_url='http://localhost:5000/api'):
         self.base_url = base_url
         self.session = requests.Session()
@@ -18,7 +16,6 @@ class InventoryCLI:
         })
     
     def display_menu(self):
-        """Display the main menu"""
         print("\n" + "="*50)
         print(" INVENTORY MANAGEMENT SYSTEM - CLI")
         print("="*50)
@@ -34,7 +31,6 @@ class InventoryCLI:
         print("="*50)
     
     def view_all_items(self):
-        """Fetch and display all inventory items"""
         try:
             response = self.session.get(f"{self.base_url}/inventory")
             response.raise_for_status()
@@ -58,7 +54,6 @@ class InventoryCLI:
             print(f"Error connecting to API: {e}")
     
     def view_single_item(self):
-        """Fetch and display a single inventory item"""
         item_id = input("Enter item ID: ").strip()
         if not item_id:
             print("Item ID cannot be empty")
@@ -251,7 +246,7 @@ class InventoryCLI:
             
             if data['status'] == 'success':
                 product = data['data']
-                print(f"\n🔍 PRODUCT FOUND")
+                print("\n PRODUCT FOUND")
                 print("-" * 80)
                 print(f"Name: {product['product_name']}")
                 print(f"Brand: {product['brands']}")
