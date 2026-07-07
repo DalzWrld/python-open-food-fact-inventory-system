@@ -47,10 +47,6 @@ def update_item(item_id, data):
 
 
 def delete_item(item_id):
-    """
-    Remove an item from the inventory by id.
-    Returns True if something was deleted, False if the id wasn't found.
-    """
     global inventory
 
     item = get_item_by_id(item_id)
@@ -62,7 +58,6 @@ def delete_item(item_id):
 
 
 def reset_store():
-    """Utility used by the test suite to reset state between tests."""
     global inventory, _next_id
     inventory = []
     _next_id = 1
