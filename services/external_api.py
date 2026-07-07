@@ -1,15 +1,3 @@
-"""
-Handles all communication with the OpenFoodFacts API.
-
-Two lookup methods are supported:
-    - fetch_by_barcode(barcode): exact product lookup
-    - fetch_by_name(name): keyword search, returns the best match
-
-Both functions return a small, normalized dict (or None if nothing was
-found / the request failed), so the rest of the app never has to deal
-with OpenFoodFacts' raw response shape directly.
-"""
-
 import requests
 
 BARCODE_URL = "https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
@@ -19,7 +7,6 @@ REQUEST_TIMEOUT = 10  # seconds
 
 
 def _normalize_product(product):
-    """Pull out just the fields we care about from an OpenFoodFacts product."""
     return {
         "name": product.get("product_name") or "Unknown product",
         "brand": product.get("brands", ""),
