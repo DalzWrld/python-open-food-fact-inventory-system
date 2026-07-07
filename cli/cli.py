@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 class InventoryCLI:
-    def __init__(self, base_url='http://localhost:5000/api'):
+    def __init__(self, base_url='http://127.0.0.1:5000'):
         self.base_url = base_url
         self.session = requests.Session()
         self.session.headers.update({
