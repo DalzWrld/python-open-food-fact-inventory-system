@@ -294,7 +294,6 @@ class InventoryCLI:
         quantity = int(quantity) if quantity else 0
         
         try:
-            # First, get product data
             response = self.session.get(f"{self.base_url}/inventory/find-by-barcode/{barcode}")
             response.raise_for_status()
             data = response.json()
@@ -302,7 +301,6 @@ class InventoryCLI:
             if data['status'] == 'success':
                 product = data['data']
                 
-                # Add to inventory
                 item_data = {
                     'product_name': product['product_name'],
                     'brands': product['brands'],
@@ -331,7 +329,7 @@ class InventoryCLI:
     
     def run(self):
         """Run the CLI interface"""
-        print("\n🚀 Starting Inventory Management System CLI")
+        print("\n Starting Inventory Management System CLI")
         print("Ensure the Flask server is running on http://localhost:5000")
         
         while True:
@@ -363,7 +361,6 @@ class InventoryCLI:
             input("\nPress Enter to continue...")
 
 def main():
-    """Entry point for the CLI"""
     cli = InventoryCLI()
     cli.run()
 
