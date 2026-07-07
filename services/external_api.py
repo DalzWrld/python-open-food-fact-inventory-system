@@ -34,11 +34,6 @@ def fetch_by_barcode(barcode):
 
 
 def fetch_by_name(name):
-    """
-    Search for a product by name/keyword. Returns the first matching
-    result as a normalized product dict, or None if nothing was found
-    / on error.
-    """
     params = {
         "search_terms": name,
         "search_simple": 1,
