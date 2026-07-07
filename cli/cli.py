@@ -15,7 +15,7 @@ class InventoryCLI:
     def display_menu(self):
         print("\n" + "=" * 50)
         print(" INVENTORY MANAGEMENT SYSTEM - CLI")
-        print("="*50)
+        print("=" * 50)
         print("1. View All Items")
         print("2. View Single Item")
         print("3. Add New Item")
