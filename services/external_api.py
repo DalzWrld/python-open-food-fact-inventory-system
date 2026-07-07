@@ -3,15 +3,15 @@ import requests
 BARCODE_URL = "https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
 SEARCH_URL = "https://world.openfoodfacts.org/cgi/search.pl"
 
-REQUEST_TIMEOUT = 10  # seconds
+REQUEST_TIMEOUT = 10
 
 
 def _normalize_product(product):
     return {
-        "name": product.get("product_name") or "Unknown product",
-        "brand": product.get("brands", ""),
+        "product_name": product.get("product_name") or "Unknown product",
+        "brands": product.get("brands", ""),
         "barcode": product.get("code", ""),
-        "ingredients": product.get("ingredients_text", ""),
+        "ingredients_text": product.get("ingredients_text", ""),
         "source": "openfoodfacts",
     }
 
@@ -33,13 +33,13 @@ def fetch_by_barcode(barcode):
     return _normalize_product(data.get("product", {}))
 
 
-def fetch_by_name(name):
+def fetch_by_name(name, limit=5):
     params = {
         "search_terms": name,
         "search_simple": 1,
         "action": "process",
         "json": 1,
-        "page_size": 1,
+        "page_size": limit,
     }
 
     try:
@@ -54,4 +54,4 @@ def fetch_by_name(name):
     if not products:
         return None
 
-    return _normalize_product(products[0])
+    return [_normalize_product(p) for p in products]

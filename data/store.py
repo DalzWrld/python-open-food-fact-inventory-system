@@ -1,6 +1,11 @@
-inventory = []
+from datetime import datetime, timezone
 
+inventory = []
 _next_id = 1
+
+
+def _timestamp():
+    return datetime.now(timezone.utc).isoformat()
 
 
 def get_all_items():
@@ -17,15 +22,18 @@ def get_item_by_id(item_id):
 def add_item(data):
     global _next_id
 
+    now = _timestamp()
     new_item = {
         "id": _next_id,
-        "name": data.get("name", "Unnamed Item"),
-        "brand": data.get("brand", ""),
+        "product_name": data.get("product_name", "Unnamed Item"),
+        "brands": data.get("brands", ""),
         "barcode": data.get("barcode", ""),
         "price": data.get("price", 0.0),
         "quantity": data.get("quantity", 0),
-        "ingredients": data.get("ingredients", ""),
+        "ingredients_text": data.get("ingredients_text", ""),
         "source": data.get("source", "manual"),
+        "created_at": now,
+        "updated_at": now,
     }
 
     inventory.append(new_item)
@@ -39,9 +47,10 @@ def update_item(item_id, data):
         return None
 
     for key, value in data.items():
-        if key in item and key != "id":
+        if key in item and key not in ("id", "created_at"):
             item[key] = value
 
+    item["updated_at"] = _timestamp()
     return item
 
 

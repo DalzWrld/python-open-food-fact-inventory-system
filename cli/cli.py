@@ -1,8 +1,5 @@
 import requests
-import sys
-import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 class InventoryCLI:
     def __init__(self, base_url='http://localhost:5000/api'):
@@ -15,7 +12,7 @@ class InventoryCLI:
     def display_menu(self):
         print("\n" + "=" * 50)
         print(" INVENTORY MANAGEMENT SYSTEM - CLI")
-        print("="*50)
+        print("=" * 50)
         print("1. View All Items")
         print("2. View Single Item")
         print("3. Add New Item")
@@ -140,7 +137,6 @@ class InventoryCLI:
         
         print("\n UPDATE ITEM (leave blank to keep current value)")
         print("-" * 50)
-        
         
         try:
             response = self.session.get(f"{self.base_url}/inventory/{item_id}")
@@ -356,9 +352,11 @@ class InventoryCLI:
             
             input("\n Press Enter to continue...")
 
+
 def main():
     cli = InventoryCLI()
     cli.run()
+
 
 if __name__ == "__main__":
     main()
