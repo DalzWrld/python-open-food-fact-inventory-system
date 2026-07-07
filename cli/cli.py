@@ -84,7 +84,6 @@ class InventoryCLI:
             print(f"Error connecting to API: {e}")
     
     def add_new_item(self):
-        """Add a new item to inventory"""
         print("\n ADD NEW ITEM")
         print("-" * 50)
         
@@ -137,16 +136,15 @@ class InventoryCLI:
             print(f"Error connecting to API: {e}")
     
     def update_item(self):
-        """Update an existing item"""
         item_id = input("Enter item ID to update: ").strip()
         if not item_id:
             print("Item ID cannot be empty")
             return
         
-        print("\n🔄 UPDATE ITEM (leave blank to keep current value)")
+        print("\n UPDATE ITEM (leave blank to keep current value)")
         print("-" * 50)
         
-        # First, get current item data
+        
         try:
             response = self.session.get(f"{self.base_url}/inventory/{item_id}")
             response.raise_for_status()
@@ -209,7 +207,6 @@ class InventoryCLI:
             print(f"Error connecting to API: {e}")
     
     def delete_item(self):
-        """Delete an item"""
         item_id = input("Enter item ID to delete: ").strip()
         if not item_id:
             print("Item ID cannot be empty")
@@ -233,7 +230,6 @@ class InventoryCLI:
             print(f"Error connecting to API: {e}")
     
     def search_by_barcode(self):
-        """Search for product by barcode in OpenFoodFacts"""
         barcode = input("Enter barcode: ").strip()
         if not barcode:
             print("Barcode cannot be empty")
@@ -259,7 +255,6 @@ class InventoryCLI:
             print(f"Error connecting to API: {e}")
     
     def search_by_name(self):
-        """Search for products by name in OpenFoodFacts"""
         product_name = input("Enter product name to search: ").strip()
         if not product_name:
             print("Product name cannot be empty")
@@ -274,7 +269,7 @@ class InventoryCLI:
             
             if data['status'] == 'success':
                 products = data['data']
-                print(f"\n🔍 SEARCH RESULTS ({len(products)})")
+                print(f"\n SEARCH RESULTS ({len(products)})")
                 print("-" * 80)
                 for i, product in enumerate(products, 1):
                     print(f"{i}. Name: {product['product_name']}")
@@ -287,7 +282,6 @@ class InventoryCLI:
             print(f"Error connecting to API: {e}")
     
     def fetch_and_add_product(self):
-        """Fetch product by barcode from OpenFoodFacts and add to inventory"""
         barcode = input("Enter barcode: ").strip()
         if not barcode:
             print("Barcode cannot be empty")
