@@ -1,6 +1,5 @@
 inventory = []
 
-# Simple counter to hand out unique ids. Starts at 1.
 _next_id = 1
 
 
