@@ -7,27 +7,6 @@ from services import external_api
 app = Flask(__name__)
 CORS(app)
 
-def create_app():
-    app = Flask(__name__)
-
-    @app.route("/")
-    def index():
-        return jsonify({
-            "message": "Inventory Management System API",
-            "endpoints": {
-                "GET /inventory": "list all items",
-                "GET /inventory/<id>": "get a single item",
-                "POST /inventory": "create an item",
-                "PATCH /inventory/<id>": "update an item",
-                "DELETE /inventory/<id>": "delete an item",
-                "GET /inventory/lookup/barcode/<barcode>": "preview OpenFoodFacts data",
-                "GET /inventory/lookup/name/<name>": "preview OpenFoodFacts data",
-                "POST /inventory/import/barcode/<barcode>": "fetch + add to inventory",
-                "POST /inventory/import/name/<name>": "fetch + add to inventory",
-            },
-        })
-
-    return app
 
 @app.route("/inventory", methods=["GET"])
 def get_all_items():
@@ -74,9 +53,7 @@ def delete_item(item_id):
     return jsonify({"message": f"Item with id {item_id} deleted"}), 200
 
 
-# ---------------------------------------------------------------------------
-# External API helper routes
-# ---------------------------------------------------------------------------
+
 
 @app.route("/lookup/barcode/<barcode>", methods=["GET"])
 def lookup_by_barcode(barcode):
@@ -119,5 +96,4 @@ def import_by_name(name):
 
 
 if __name__ == "__main__":
-    app = create_app()
     app.run(debug=True)
