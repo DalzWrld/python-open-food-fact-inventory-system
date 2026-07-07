@@ -1,10 +1,7 @@
 import requests
-# import json
 import sys
 import os
-# from typing import Dict, Any
 
-# Add the parent directory to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 class InventoryCLI:
@@ -16,7 +13,7 @@ class InventoryCLI:
         })
     
     def display_menu(self):
-        print("\n" + "="*50)
+        print("\n" + "=" * 50)
         print(" INVENTORY MANAGEMENT SYSTEM - CLI")
         print("="*50)
         print("1. View All Items")
@@ -28,7 +25,7 @@ class InventoryCLI:
         print("7. Search by Name (OpenFoodFacts)")
         print("8. Fetch Product by Barcode and Add to Inventory")
         print("9. Exit")
-        print("="*50)
+        print("=" * 50)
     
     def view_all_items(self):
         try:
@@ -328,13 +325,12 @@ class InventoryCLI:
             print(f"Error connecting to API: {e}")
     
     def run(self):
-        """Run the CLI interface"""
         print("\n Starting Inventory Management System CLI")
         print("Ensure the Flask server is running on http://localhost:5000")
         
         while True:
             self.display_menu()
-            choice = input("\nSelect an option (1-9): ").strip()
+            choice = input("\n Select an option (1-9): ").strip()
             
             if choice == '1':
                 self.view_all_items()
@@ -358,7 +354,7 @@ class InventoryCLI:
             else:
                 print("Invalid option. Please choose 1-9.")
             
-            input("\nPress Enter to continue...")
+            input("\n Press Enter to continue...")
 
 def main():
     cli = InventoryCLI()
