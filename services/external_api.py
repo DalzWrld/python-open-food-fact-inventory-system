@@ -5,6 +5,13 @@ SEARCH_URL = "https://world.openfoodfacts.org/cgi/search.pl"
 
 REQUEST_TIMEOUT = 10
 
+# OpenFoodFacts asks every client to send a descriptive User-Agent so they
+# can identify traffic; requests without one risk being throttled or
+# blocked outright. Format: AppName/Version (contact-info)
+HEADERS = {
+    "User-Agent": "InventoryManagementSystem/1.0 (student-project)"
+}
+
 
 def _normalize_product(product):
     return {
@@ -19,7 +26,9 @@ def _normalize_product(product):
 def fetch_by_barcode(barcode):
     try:
         response = requests.get(
-            BARCODE_URL.format(barcode=barcode), timeout=REQUEST_TIMEOUT
+            BARCODE_URL.format(barcode=barcode),
+            headers=HEADERS,
+            timeout=REQUEST_TIMEOUT,
         )
         response.raise_for_status()
     except requests.RequestException:
@@ -43,7 +52,9 @@ def fetch_by_name(name, limit=5):
     }
 
     try:
-        response = requests.get(SEARCH_URL, params=params, timeout=REQUEST_TIMEOUT)
+        response = requests.get(
+            SEARCH_URL, params=params, headers=HEADERS, timeout=REQUEST_TIMEOUT
+        )
         response.raise_for_status()
     except requests.RequestException:
         return None
