@@ -5,9 +5,6 @@ SEARCH_URL = "https://world.openfoodfacts.org/cgi/search.pl"
 
 REQUEST_TIMEOUT = 10
 
-# OpenFoodFacts asks every client to send a descriptive User-Agent so they
-# can identify traffic; requests without one risk being throttled or
-# blocked outright. Format: AppName/Version (contact-info)
 HEADERS = {
     "User-Agent": "InventoryManagementSystem/1.0 (student-project)"
 }
