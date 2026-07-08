@@ -1,6 +1,5 @@
 import requests
 
-
 class InventoryCLI:
     def __init__(self, base_url='http://localhost:5000/api'):
         self.base_url = base_url
